@@ -3,7 +3,7 @@ import pprint
 
 bedrock = boto3.client(
     service_name='bedrock',
-    region_name='eu-central-1')
+    region_name='us-west-2')
 
 pp = pprint.PrettyPrinter(depth=4)
 
@@ -18,5 +18,5 @@ def get_foundation_model(modelIdentifier):
     pp.pprint(model)
 
 # list_foundation_models()
-# get_foundation_model('anthropic.claude-v2')
+get_foundation_model('anthropic.claude-3-5-haiku-20241022-v1:0')
 
