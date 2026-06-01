@@ -9,7 +9,7 @@ animal = "cat"
 response = client.invoke_model(
     body=json.dumps(
         {
-            "inputText": animal,
+            "inputText": fact,
         }
     ),
     modelId="amazon.titan-embed-text-v1",

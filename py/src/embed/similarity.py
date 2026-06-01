@@ -11,5 +11,5 @@ list1 = [1, 2, 3]
 list2 = [1, 2, 3]
 list3 = [-1, -2, -3]
 
-# print(cosineSimilarity(list1, list2))
-# print(cosineSimilarity(list1, list3))
+print(cosineSimilarity(list1, list2))
+print(cosineSimilarity(list1, list3))

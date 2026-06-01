@@ -35,7 +35,7 @@ for fact in facts:
         'embedding': getEmbedding(fact)
     })
 
-newFactEmbedding = getEmbedding(question)
+newFactEmbedding = getEmbedding(newFact)
 
 similarities = []
 
@@ -45,7 +45,7 @@ for fact in factsWithEmbeddings:
         'similarity': cosineSimilarity(fact['embedding'], newFactEmbedding)
     })
 
-print(f"Similarities for fact: '{question}' with:")
+print(f"Similarities for fact: '{newFact}' with:")
 similarities.sort(key=lambda x: x['similarity'], reverse=True)
 for similarity in similarities:
     print(f"  '{similarity['text']}': {similarity['similarity']:.2f}")
