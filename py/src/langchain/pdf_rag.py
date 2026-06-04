@@ -1,16 +1,16 @@
-from langchain_aws import BedrockLLM as Bedrock
+from langchain_aws import ChatBedrock  # changed
 from langchain_aws import BedrockEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import PyPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 import boto3
 
 AWS_REGION = "us-west-2"
 
 bedrock = boto3.client(service_name="bedrock-runtime", region_name=AWS_REGION)
 
-model = Bedrock(model_id="amazon.titan-text-express-v1", client=bedrock)
+model = ChatBedrock(model_id="us.amazon.nova-lite-v1:0", client=bedrock)  # changed
 
 bedrock_embeddings = BedrockEmbeddings(
     model_id="amazon.titan-embed-text-v1", client=bedrock
@@ -29,7 +29,7 @@ vector_store = FAISS.from_documents(splitted_docs, bedrock_embeddings)
 
 # create retriever
 retriever = vector_store.as_retriever(
-    search_kwargs={"k": 2} 
+    search_kwargs={"k": 2}
 )
 results = retriever.invoke(question)
 
@@ -51,4 +51,4 @@ template = ChatPromptTemplate.from_messages(
 chain = template.pipe(model)
 
 response = chain.invoke({"input": question, "context": results_string})
-print(response)
+print(response.content)  # changed

@@ -1,4 +1,4 @@
-from langchain_aws import BedrockLLM as Bedrock
+from langchain_aws import ChatBedrock  # changed
 from langchain_aws import BedrockEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.vectorstores import FAISS
@@ -17,7 +17,7 @@ AWS_REGION = "us-west-2"
 
 bedrock = boto3.client(service_name="bedrock-runtime", region_name=AWS_REGION)
 
-model = Bedrock(model_id="amazon.titan-text-express-v1", client=bedrock)
+model = ChatBedrock(model_id="us.amazon.nova-lite-v1:0", client=bedrock)  # changed
 
 bedrock_embeddings = BedrockEmbeddings(
     model_id="amazon.titan-embed-text-v1", client=bedrock
@@ -28,7 +28,7 @@ vector_store = FAISS.from_texts(my_data, bedrock_embeddings)
 
 # create retriever
 retriever = vector_store.as_retriever(
-    search_kwargs={"k": 2}  # maybe we can add a score threshold here?
+    search_kwargs={"k": 2}
 )
 
 results = retriever.invoke(question)
@@ -51,7 +51,7 @@ template = ChatPromptTemplate.from_messages(
 chain = template.pipe(model)
 
 response = chain.invoke({"input": question, "context": results_string})
-print(response)
+print(response.content)  # changed: .content needed for ChatBedrock responses
 
 
 
