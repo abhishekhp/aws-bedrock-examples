@@ -1,4 +1,4 @@
-POST https://eyhfglxs2j.execute-api.eu-west-1.amazonaws.com/prod/text?points=3
+POST https://qpv6yh8xge.execute-api.us-east-1.amazonaws.com/prod/text?points=3
 content-Type: application/json
 
 {
