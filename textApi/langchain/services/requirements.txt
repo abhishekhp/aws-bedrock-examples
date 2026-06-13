@@ -1,0 +1,5 @@
+# Runtime dependencies bundled INTO the Lambda function package by CDK.
+# (The AWS Lambda Python runtime already ships boto3/botocore, which
+#  langchain-aws uses under the hood to call Amazon Bedrock.)
+langchain-aws>=0.2.0
+langchain-core>=0.3.0
