@@ -1,0 +1,8 @@
+# Runtime dependencies bundled INTO the Lambda deployment package.
+# These are installed against the Lambda Linux runtime at `cdk synth/deploy`
+# time via the Docker bundling step defined in py/py_stack.py.
+#
+# Pinned to the LangChain 1.x line (langchain-core 1.4.x / langchain-aws 1.4.x).
+langchain-core>=1.4,<2
+langchain-aws>=1.4,<2
+boto3>=1.34
