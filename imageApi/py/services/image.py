@@ -5,7 +5,9 @@ from time import time
 import os
 
 AWS_REGION_BEDROCK = "us-west-2"
-S3_BUCKET = os.environ.get("BUCKET_NAME")
+S3_BUCKET = "text-2-image-bucket-253138837329-us-east-1-an"
+
+model_id = "stability.stable-image-core-v1:1"  # cheapest active text-to-image model
 
 client = boto3.client(service_name="bedrock-runtime", region_name=AWS_REGION_BEDROCK)
 s3_client = boto3.client('s3')
@@ -15,10 +17,10 @@ def handler(event, context):
     body = json.loads(event["body"])
     description = body.get("description")
     if description:
-        titan_config = get_titan_config(description)
+        model_config = get_stability_config(description)
         response = client.invoke_model(
-            body=titan_config, 
-            modelId="amazon.titan-image-generator-v1", 
+            body=model_config,
+            modelId=model_id,
             accept="application/json", 
             contentType="application/json"
         )
@@ -65,3 +67,11 @@ def get_titan_config(description: str):
             },
         }
     )
+
+def get_stability_config(description: str):
+    return json.dumps({
+    "prompt": description,
+    "output_format": "png",
+    "aspect_ratio": "1:1",   # options: 1:1, 16:9, 4:3, 3:2, 5:4, 2:3, 9:16
+    "mode": "text-to-image"
+    })
